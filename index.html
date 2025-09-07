@@ -13,13 +13,11 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      text-align: center;
     }
     h1 { color: #38bdf8; margin-bottom: 10px; }
-    #timer {
-      margin: 10px 0;
-      font-size: 14px;
-      color: #fbbf24;
-    }
+    .status { margin: 10px 0; color:#94a3b8; }
+    .status span { color:#facc15; font-weight:bold; }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -37,7 +35,12 @@
 </head>
 <body>
   <h1>Sponsored Ads</h1>
-  <div id="timer">Refresh dalam 30 detik...</div>
+
+  <!-- Status: countdown + refresh count -->
+  <div class="status">
+    ⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp; &nbsp;
+    🔄 Jumlah refresh: <span id="refreshCount">0</span>
+  </div>
 
   <!-- Banner 728x90 (Adsterra) -->
   <div class="banner leaderboard">
@@ -95,23 +98,45 @@
     <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
   </div>
 
-  <!-- Monetag Banner -->
+  <!-- Monetag Banner (direct script; placed outside any injected innerHTML) -->
   <div class="banner rectangle">
+    <!-- Monetag banner script: may remain empty if no inventory, that's normal -->
     <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
   </div>
 
-  <!-- Monetag Vignette Ads -->
-  <script>(function(s){s.dataset.zone='9748151',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement,document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
-  <!-- Countdown + Auto Refresh -->
+  <!-- Monetag Vignette (keep) -->
   <script>
+    (function(s){
+      s.dataset.zone='9748151';
+      s.src='https://groleegni.net/vignette.min.js';
+    })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+  </script>
+
+  <!-- Countdown + refresh counter stored in localStorage -->
+  <script>
+    // load saved count
+    let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
+    const refreshEl = document.getElementById('refreshCount');
+    const countdownEl = document.getElementById('countdown');
+
     let countdown = 30;
-    setInterval(() => {
+    function updateDisplay(){
+      countdownEl.textContent = countdown;
+      refreshEl.textContent = refreshCount;
+    }
+    updateDisplay();
+
+    const interval = setInterval(() => {
       countdown--;
-      document.getElementById("timer").innerText = "Refresh dalam " + countdown + " detik...";
       if (countdown <= 0) {
-        location.reload(); // reload halaman
+        // increment counter and persist
+        refreshCount++;
+        localStorage.setItem('adRefreshCount', refreshCount);
+        // reload page to refresh all scripts safely
+        location.reload();
+        return; // page will reload
       }
+      updateDisplay();
     }, 1000);
   </script>
 </body>
