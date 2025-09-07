@@ -1,136 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Ads Responsive (Adsterra + Monetag)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 { color: #38bdf8; margin-bottom: 10px; }
-    .status { margin: 10px 0; color:#94a3b8; }
-    .status span { color:#facc15; font-weight:bold; }
-    .banner { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; margin: 10px 0; display: flex; justify-content: center; align-items: center; }
-    .leaderboard { width: 100%; max-width: 728px; height: 90px; }
-    .rectangle { width: 100%; max-width: 300px; height: 250px; }
-    .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-    .mobile-banner { width: 100%; max-width: 320px; height: 50px; margin-top:20px; }
-    .log { font-size: 12px; color: #f1f5f9; background: #1e293b; padding:5px; margin-top:10px; border-radius:5px; max-width:800px; text-align:left; }
-  </style>
+<meta charset="UTF-8">
+<title>Ads Extreme Auto Refresh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: Arial; background:#0f172a; color:#f1f5f9; display:flex; flex-direction:column; align-items:center; padding:20px; text-align:center; }
+  h1 { color:#38bdf8; margin-bottom:10px; }
+  .status { margin:10px 0; color:#94a3b8; }
+  .status span { color:#facc15; font-weight:bold; }
+  .banner { background:#1e293b; border:1px solid rgba(255,255,255,0.2); border-radius:8px; margin:10px 0; display:flex; justify-content:center; align-items:center; min-height:50px; }
+  .leaderboard { width:100%; max-width:728px; height:90px; }
+  .rectangle { width:100%; max-width:300px; height:250px; }
+  .grid { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+  .mobile-banner { width:100%; max-width:320px; height:50px; margin-top:20px; }
+</style>
 </head>
 <body>
-  <h1>Sponsored Ads</h1>
 
-  <div class="status">
-    ⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp;&nbsp;
-    🔄 Jumlah refresh: <span id="refreshCount">0</span>
-  </div>
+<h1>Sponsored Ads</h1>
+<div class="status">
+  ⏳ Global Countdown: <span id="countdown">30</span> detik &nbsp;&nbsp;
+  🔄 Total refresh: <span id="totalRefresh">0</span>
+</div>
 
-  <!-- Banner 728x90 -->
-  <div id="ad728" class="banner leaderboard">
-    <script type="text/javascript">
-      const countries = ['US','ID','SG','MY','PH','TH','VN'];
-      const randCountry = countries[Math.floor(Math.random()*countries.length)];
-      atOptions = { key:'790e3e25b374c71ea2bede25e64dafd1', format:'iframe', height:90, width:728, params:{country:randCountry} };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
-  </div>
+<!-- Adsterra banners -->
+<div class="banner leaderboard" id="ad728"></div>
+<div class="grid">
+  <div class="banner rectangle" id="ad300a"></div>
+  <div class="banner rectangle" id="ad300b"></div>
+</div>
+<div class="banner mobile-banner" id="ad320"></div>
 
-  <!-- Grid 2 Banner 300x250 -->
-  <div class="grid">
-    <div id="ad300a" class="banner rectangle">
+<!-- Monetag banner -->
+<div class="banner rectangle">
+  <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
+</div>
+
+<!-- Monetag Vignette -->
+<script>
+(function(s){
+  s.dataset.zone='9748151';
+  s.src='https://groleegni.net/vignette.min.js';
+})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+</script>
+
+<script>
+const countries = ['US','ID','SG','MY','PH','TH','VN','IN'];
+const totalRefreshEl = document.getElementById('totalRefresh');
+const countdownEl = document.getElementById('countdown');
+let totalRefresh = parseInt(localStorage.getItem('totalRefresh')) || 0;
+let globalCountdown = 30;
+
+// Helper: inject Adsterra banner
+function injectBanner(elId, key, w, h){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const randCountry = countries[Math.floor(Math.random()*countries.length)];
+  const delay = Math.floor(Math.random()*3000); // random delay 0-3s
+  console.log(`Inject ${elId} | Country: ${randCountry} | Delay: ${delay}ms`);
+  setTimeout(()=>{
+    el.innerHTML = `
       <script type="text/javascript">
-        const randCountryA = countries[Math.floor(Math.random()*countries.length)];
-        atOptions = { key:'276947a635572659f48ea4440c4e25fc', format:'iframe', height:250, width:300, params:{country:randCountryA} };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
-    <div id="ad300b" class="banner rectangle">
-      <script type="text/javascript">
-        const randCountryB = countries[Math.floor(Math.random()*countries.length)];
-        atOptions = { key:'276947a635572659f48ea4440c4e25fc', format:'iframe', height:250, width:300, params:{country:randCountryB} };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
-  </div>
+        atOptions = {
+          key:'${key}',
+          format:'iframe',
+          height:${h},
+          width:${w},
+          params:{ country:'${randCountry}' }
+        };
+      <\/script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/${key}/invoke.js"><\/script>
+    `;
+  }, delay);
+}
 
-  <!-- Banner 320x50 -->
-  <div id="ad320" class="banner mobile-banner">
-    <script type="text/javascript">
-      const randCountryC = countries[Math.floor(Math.random()*countries.length)];
-      atOptions = { key:'a443559ffdea6367477176b606afde09', format:'iframe', height:50, width:320, params:{country:randCountryC} };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
-  </div>
+// Individual banner refresh timers
+const banners = [
+  {id:'ad728', key:'790e3e25b374c71ea2bede25e64dafd1', w:728, h:90, interval: 30000},
+  {id:'ad300a', key:'276947a635572659f48ea4440c4e25fc', w:300, h:250, interval: 32000},
+  {id:'ad300b', key:'276947a635572659f48ea4440c4e25fc', w:300, h:250, interval: 35000},
+  {id:'ad320', key:'a443559ffdea6367477176b606afde09', w:320, h:50, interval: 28000}
+];
 
-  <!-- Monetag Banner -->
-  <div class="banner rectangle" id="monetagBanner">
-    <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
-  </div>
-
-  <!-- Monetag Vignette -->
-  <script>
-    (function(s){
-      s.dataset.zone='9748151';
-      s.src='https://groleegni.net/vignette.min.js';
-    })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
-  </script>
-
-  <!-- Countdown + refresh counter -->
-  <script>
-    let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
-    const refreshEl = document.getElementById('refreshCount');
-    const countdownEl = document.getElementById('countdown');
-    let countdown = 30;
-    const logEl = document.createElement('div');
-    logEl.className = 'log';
-    document.body.appendChild(logEl);
-
-    function updateDisplay(){ countdownEl.textContent=countdown; refreshEl.textContent=refreshCount; }
-    updateDisplay();
-
-    function refreshBanner(id,key,h,w){
-      const container = document.getElementById(id);
-      container.innerHTML='';
-      const randCountry = countries[Math.floor(Math.random()*countries.length)];
-      const script1 = document.createElement('script');
-      script1.type='text/javascript';
-      script1.innerHTML=`atOptions={key:'${key}',format:'iframe',height:${h},width:${w},params:{country:'${randCountry}'}};`;
-      const script2=document.createElement('script');
-      script2.src='//www.highperformanceformat.com/'+key+'/invoke.js';
-      container.appendChild(script1);
-      container.appendChild(script2);
-      logEl.innerHTML+=`Refreshed ${id} | Country: ${randCountry} | Time: ${new Date().toLocaleTimeString()}<br>`;
+// Initial injection
+banners.forEach(b=>{
+  injectBanner(b.id,b.key,b.w,b.h);
+  setInterval(()=>{
+    totalRefresh++;
+    localStorage.setItem('totalRefresh', totalRefresh);
+    totalRefreshEl.textContent = totalRefresh;
+    console.log(`Refreshing ${b.id} | Total refresh: ${totalRefresh}`);
+    injectBanner(b.id,b.key,b.w,b.h);
+    // Trigger Vignette Monetag every 10th total refresh
+    if(totalRefresh % 10 === 0){
+      console.log('Trigger Vignette Monetag via reload');
+      location.reload();
     }
+  }, b.interval);
+});
 
-    function refreshAll(){
-      const ads=[
-        {id:'ad728', key:'790e3e25b374c71ea2bede25e64dafd1', h:90, w:728},
-        {id:'ad300a', key:'276947a635572659f48ea4440c4e25fc', h:250, w:300},
-        {id:'ad300b', key:'276947a635572659f48ea4440c4e25fc', h:250, w:300},
-        {id:'ad320', key:'a443559ffdea6367477176b606afde09', h:50, w:320}
-      ];
-      ads.forEach(ad=>{
-        const delay=Math.floor(Math.random()*3000);
-        setTimeout(()=>refreshBanner(ad.id,ad.key,ad.h,ad.w),delay);
-      });
-      refreshCount++;
-      localStorage.setItem('adRefreshCount',refreshCount);
-    }
+// Global countdown timer
+setInterval(()=>{
+  globalCountdown--;
+  if(globalCountdown<=0) globalCountdown=30;
+  countdownEl.textContent = globalCountdown;
+},1000);
+</script>
 
-    setInterval(()=>{
-      countdown--;
-      if(countdown<=0){countdown=30;refreshAll();}
-      updateDisplay();
-    },1000);
-  </script>
 </body>
 </html>
