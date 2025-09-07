@@ -26,6 +26,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      min-height: 50px;
     }
     .leaderboard { width: 100%; max-width: 728px; height: 90px; }
     .rectangle { width: 100%; max-width: 300px; height: 250px; }
@@ -43,9 +44,9 @@
   </div>
 
   <!-- Banner 728x90 (Adsterra) -->
-  <div class="banner leaderboard">
+  <div class="banner leaderboard" id="ad728">
     <script type="text/javascript">
-      const countries = ['US','GB','CA','AU','ID','SG'];
+      const countries = ['US','ID','SG','MY','PH','TH'];
       const randCountry = countries[Math.floor(Math.random()*countries.length)];
       atOptions = {
         key : '790e3e25b374c71ea2bede25e64dafd1',
@@ -54,13 +55,14 @@
         width : 728,
         params: { country: randCountry }
       };
+      console.log('ad728 - country:', randCountry);
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
   </div>
 
   <!-- Grid 2 Banner 300x250 (Adsterra) -->
   <div class="grid">
-    <div class="banner rectangle">
+    <div class="banner rectangle" id="ad300a">
       <script type="text/javascript">
         const randCountryA = countries[Math.floor(Math.random()*countries.length)];
         atOptions = {
@@ -70,10 +72,11 @@
           width : 300,
           params: { country: randCountryA }
         };
+        console.log('ad300a - country:', randCountryA);
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
-    <div class="banner rectangle">
+    <div class="banner rectangle" id="ad300b">
       <script type="text/javascript">
         const randCountryB = countries[Math.floor(Math.random()*countries.length)];
         atOptions = {
@@ -83,13 +86,14 @@
           width : 300,
           params: { country: randCountryB }
         };
+        console.log('ad300b - country:', randCountryB);
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
   </div>
 
-  <!-- Banner 320x50 (Adsterra Mobile) -->
-  <div class="banner mobile-banner">
+  <!-- Banner 320x50 (Adsterra) -->
+  <div class="banner mobile-banner" id="ad320">
     <script type="text/javascript">
       const randCountryC = countries[Math.floor(Math.random()*countries.length)];
       atOptions = {
@@ -99,6 +103,7 @@
         width : 320,
         params: { country: randCountryC }
       };
+      console.log('ad320 - country:', randCountryC);
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
   </div>
@@ -121,23 +126,47 @@
     let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
     const refreshEl = document.getElementById('refreshCount');
     const countdownEl = document.getElementById('countdown');
+
     let countdown = 30;
-    function updateDisplay(){ 
-      countdownEl.textContent = countdown; 
-      refreshEl.textContent = refreshCount; 
+    function updateDisplay() {
+      countdownEl.textContent = countdown;
+      refreshEl.textContent = refreshCount;
     }
     updateDisplay();
-    const interval = setInterval(() => {
+
+    setInterval(() => {
       countdown--;
-      if(countdown <= 0){
+      if(countdown <= 0) {
         refreshCount++;
         localStorage.setItem('adRefreshCount', refreshCount);
-        console.log(`Refresh #${refreshCount} | Next page load`);
-        location.reload();
-        return;
+        console.log('=== Refresh #' + refreshCount + ' ===');
+        // reload banners individually with random delay
+        const reloadBanner = (id, key, w, h) => {
+          const randCountry = countries[Math.floor(Math.random()*countries.length)];
+          const container = document.getElementById(id);
+          container.innerHTML = `
+            <script type="text/javascript">
+              atOptions = {
+                key : '${key}',
+                format : 'iframe',
+                height : ${h},
+                width : ${w},
+                params: { country: '${randCountry}' }
+              };
+            <\/script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/${key}/invoke.js"><\/script>
+          `;
+          console.log(id+' refreshed - country:', randCountry);
+        };
+        // apply with random delay 0-3s
+        setTimeout(()=> reloadBanner('ad728','790e3e25b374c71ea2bede25e64dafd1',728,90), Math.random()*3000);
+        setTimeout(()=> reloadBanner('ad300a','276947a635572659f48ea4440c4e25fc',300,250), Math.random()*3000);
+        setTimeout(()=> reloadBanner('ad300b','276947a635572659f48ea4440c4e25fc',300,250), Math.random()*3000);
+        setTimeout(()=> reloadBanner('ad320','a443559ffdea6367477176b606afde09',320,50), Math.random()*3000);
+        countdown = 30; // reset countdown
       }
       updateDisplay();
-    }, 1000);
+    },1000);
   </script>
 </body>
 </html>
