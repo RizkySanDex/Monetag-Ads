@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Responsive</title>
+  <title>Ads Responsive Auto Refresh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -14,7 +14,8 @@
       align-items: center;
       padding: 20px;
     }
-    h1 { color: #38bdf8; margin-bottom: 20px; }
+    h1 { color: #38bdf8; margin-bottom: 5px; }
+    .countdown { color: #facc15; margin-bottom: 15px; font-weight: bold; }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -27,67 +28,23 @@
     .leaderboard { width: 100%; max-width: 728px; height: 90px; }
     .rectangle { width: 100%; max-width: 300px; height: 250px; }
     .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-    iframe { border: none; width: 100%; height: 100%; }
   </style>
 </head>
 <body>
   <h1>Sponsored Ads</h1>
+  <div class="countdown">Refresh dalam <span id="timer">30</span> detik</div>
 
   <!-- Banner 728x90 -->
-  <div class="banner leaderboard">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '790e3e25b374c71ea2bede25e64dafd1',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
-  </div>
+  <div class="banner leaderboard" id="ad728"></div>
 
   <!-- Grid 2 Banner 300x250 -->
   <div class="grid">
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
+    <div class="banner rectangle" id="ad300a"></div>
+    <div class="banner rectangle" id="ad300b"></div>
   </div>
 
   <!-- Banner 320x50 (Mobile) -->
-  <div class="banner" style="width: 100%; max-width: 320px; height: 50px; margin-top:20px;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'a443559ffdea6367477176b606afde09',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
-  </div>
+  <div class="banner" id="ad320" style="width:100%; max-width:320px; height:50px; margin-top:20px;"></div>
 
   <!-- Monetag Vignette Ads -->
   <script>
@@ -95,6 +52,49 @@
       s.dataset.zone='9748151';
       s.src='https://groleegni.net/vignette.min.js';
     })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+  </script>
+
+  <!-- Auto Refresh Adsterra + Countdown -->
+  <script>
+    function injectAd(containerId, key, w, h) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      const script1 = document.createElement("script");
+      script1.type = "text/javascript";
+      script1.innerHTML = `atOptions = {key:'${key}',format:'iframe',height:${h},width:${w},params:{}};`;
+      container.appendChild(script1);
+
+      const script2 = document.createElement("script");
+      script2.type = "text/javascript";
+      script2.src = `//www.highperformanceformat.com/${key}/invoke.js`;
+      container.appendChild(script2);
+    }
+
+    function loadAds() {
+      injectAd("ad728", "790e3e25b374c71ea2bede25e64dafd1", 728, 90);
+      injectAd("ad300a", "276947a635572659f48ea4440c4e25fc", 300, 250);
+      injectAd("ad300b", "276947a635572659f48ea4440c4e25fc", 300, 250);
+      injectAd("ad320", "a443559ffdea6367477176b606afde09", 320, 50);
+    }
+
+    // Countdown timer 30 detik
+    let timer = 30;
+    function startCountdown() {
+      const timerEl = document.getElementById("timer");
+      setInterval(() => {
+        timer--;
+        if (timer <= 0) {
+          loadAds();   // refresh iklan
+          timer = 30;  // reset timer
+        }
+        timerEl.textContent = timer;
+      }, 1000);
+    }
+
+    // Load pertama kali
+    loadAds();
+    startCountdown();
   </script>
 </body>
 </html>
