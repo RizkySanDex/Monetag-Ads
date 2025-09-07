@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Monetag + Adsterra Responsive</title>
+  <title>Responsive Ads Monetag & Adsterra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -15,53 +15,47 @@
       padding: 20px;
       margin: 0;
     }
-    h1 { 
-      color: #38bdf8; 
-      margin-bottom: 20px; 
-      text-align: center;
-    }
+    h1 { color: #38bdf8; margin-bottom: 20px; text-align: center; }
+    
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 8px;
       margin: 10px 0;
-      overflow: hidden;
-    }
-    .leaderboard { 
-      width: 728px; 
-      height: 90px; 
-      max-width: 100%; 
-    }
-    .rectangle { 
-      width: 300px; 
-      height: 250px; 
-      max-width: 100%;
-    }
-    .grid { 
-      display: flex; 
-      gap: 20px; 
-      flex-wrap: wrap; 
-      justify-content: center; 
-      margin-top: 20px; 
-    }
-    iframe { 
-      border: none; 
-      width: 100%; 
-      height: 100%; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Responsive Mobile */
+    .leaderboard { width: 100%; max-width: 728px; height: 90px; }
+    .rectangle { width: 100%; max-width: 300px; height: 250px; }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    iframe, .ad-container {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Responsive untuk mobile */
     @media (max-width: 768px) {
-      .leaderboard { height: 50px; }
-      .rectangle { width: 100%; height: 200px; }
-      .grid { flex-direction: column; gap: 10px; }
+      .leaderboard { max-width: 100%; height: 90px; }
+      .rectangle { max-width: 100%; height: 250px; }
     }
   </style>
 </head>
 <body>
   <h1>Sponsored Ads</h1>
 
-  <!-- Banner 728x90 / Adsterra -->
+  <!-- Banner 728x90 (Adsterra) -->
   <div class="banner leaderboard">
     <script type="text/javascript">
       atOptions = {
@@ -75,7 +69,7 @@
     <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
   </div>
 
-  <!-- Grid Banner 300x250 / Adsterra + Monetag -->
+  <!-- Grid 2 Banner 300x250 -->
   <div class="grid">
     <div class="banner rectangle">
       <script type="text/javascript">
@@ -89,25 +83,27 @@
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
+
     <div class="banner rectangle">
-      <iframe id="ad300b" src="ad300.html"></iframe> <!-- Monetag iframe -->
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '276947a635572659f48ea4440c4e25fc',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
   </div>
 
-  <!-- Vignette Ads Monetag -->
+  <!-- Monetag Vignette Ads -->
   <script>
     (function(s){
-      s.dataset.zone='9748151'; // ganti sesuai Zone ID vignette Monetag
+      s.dataset.zone='9748151'; // ganti sesuai Zone ID Monetag
       s.src='https://groleegni.net/vignette.min.js';
     })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
-  </script>
-
-  <script>
-    // auto refresh iframe setiap 30 detik
-    setInterval(()=>{
-      const monetagFrame = document.getElementById("ad300b");
-      if(monetagFrame) monetagFrame.src="ad300.html?rnd="+Date.now();
-    }, 30000);
   </script>
 </body>
 </html>
