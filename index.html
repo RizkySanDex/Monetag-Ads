@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Responsive</title>
+  <title>Ads Responsive Auto Refresh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -14,7 +14,8 @@
       align-items: center;
       padding: 20px;
     }
-    h1 { color: #38bdf8; margin-bottom: 20px; }
+    h1 { color: #38bdf8; margin-bottom: 10px; }
+    .refresh-time { color: #facc15; margin-bottom: 10px; }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -27,67 +28,23 @@
     .leaderboard { width: 100%; max-width: 728px; height: 90px; }
     .rectangle { width: 100%; max-width: 300px; height: 250px; }
     .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-    iframe { border: none; width: 100%; height: 100%; }
   </style>
 </head>
 <body>
   <h1>Sponsored Ads</h1>
+  <div class="refresh-time" id="refreshTime">Last Refresh: --:--:--</div>
 
   <!-- Banner 728x90 -->
-  <div class="banner leaderboard">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '790e3e25b374c71ea2bede25e64dafd1',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
-  </div>
+  <div class="banner leaderboard" id="ad728"></div>
 
   <!-- Grid 2 Banner 300x250 -->
   <div class="grid">
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
+    <div class="banner rectangle" id="ad300a"></div>
+    <div class="banner rectangle" id="ad300b"></div>
   </div>
 
   <!-- Banner 320x50 (Mobile) -->
-  <div class="banner" style="width: 100%; max-width: 320px; height: 50px; margin-top:20px;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : 'a443559ffdea6367477176b606afde09',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
-  </div>
+  <div class="banner" id="ad320" style="width:100%; max-width:320px; height:50px;"></div>
 
   <!-- Monetag Vignette Ads -->
   <script>
@@ -95,6 +52,61 @@
       s.dataset.zone='9748151';
       s.src='https://groleegni.net/vignette.min.js';
     })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+  </script>
+
+  <!-- Script Adsterra & Auto Refresh -->
+  <script>
+    function updateRefreshTime() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString();
+      document.getElementById("refreshTime").textContent = "Last Refresh: " + timeStr;
+    }
+
+    function loadAdsterra() {
+      // Update waktu refresh
+      updateRefreshTime();
+
+      // 728x90
+      document.getElementById("ad728").innerHTML = '';
+      var ad728 = document.createElement('script');
+      ad728.type = 'text/javascript';
+      ad728.innerHTML = "atOptions = {key:'790e3e25b374c71ea2bede25e64dafd1',format:'iframe',height:90,width:728,params:{}};";
+      document.getElementById("ad728").appendChild(ad728);
+      var ad728_src = document.createElement('script');
+      ad728_src.type = 'text/javascript';
+      ad728_src.src = "//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js";
+      document.getElementById("ad728").appendChild(ad728_src);
+
+      // 300x250 (dua kolom)
+      ['ad300a','ad300b'].forEach(function(id){
+        document.getElementById(id).innerHTML = '';
+        var ad300 = document.createElement('script');
+        ad300.type = 'text/javascript';
+        ad300.innerHTML = "atOptions = {key:'276947a635572659f48ea4440c4e25fc',format:'iframe',height:250,width:300,params:{}};";
+        document.getElementById(id).appendChild(ad300);
+        var ad300_src = document.createElement('script');
+        ad300_src.type = 'text/javascript';
+        ad300_src.src = "//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js";
+        document.getElementById(id).appendChild(ad300_src);
+      });
+
+      // 320x50
+      document.getElementById("ad320").innerHTML = '';
+      var ad320 = document.createElement('script');
+      ad320.type = 'text/javascript';
+      ad320.innerHTML = "atOptions = {key:'a443559ffdea6367477176b606afde09',format:'iframe',height:50,width:320,params:{}};";
+      document.getElementById("ad320").appendChild(ad320);
+      var ad320_src = document.createElement('script');
+      ad320_src.type = 'text/javascript';
+      ad320_src.src = "//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js";
+      document.getElementById("ad320").appendChild(ad320_src);
+    }
+
+    // Load pertama kali
+    loadAdsterra();
+
+    // Auto refresh setiap 30 detik
+    setInterval(loadAdsterra, 30000);
   </script>
 </body>
 </html>
