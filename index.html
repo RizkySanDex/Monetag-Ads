@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Responsive Ads Monetag & Adsterra</title>
+  <title>Ads Responsive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -13,10 +13,8 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
-      margin: 0;
     }
-    h1 { color: #38bdf8; margin-bottom: 20px; text-align: center; }
-
+    h1 { color: #38bdf8; margin-bottom: 20px; }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -26,100 +24,75 @@
       justify-content: center;
       align-items: center;
     }
-
     .leaderboard { width: 100%; max-width: 728px; height: 90px; }
     .rectangle { width: 100%; max-width: 300px; height: 250px; }
-
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 20px;
-      width: 100%;
-    }
-
-    iframe, .ad-container {
-      border: none;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Responsive untuk mobile */
-    @media (max-width: 768px) {
-      .leaderboard { max-width: 100%; height: 90px; }
-      .rectangle { max-width: 100%; height: 250px; }
-    }
+    .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+    iframe { border: none; width: 100%; height: 100%; }
   </style>
 </head>
 <body>
   <h1>Sponsored Ads</h1>
 
-  <!-- Banner 728x90 (Adsterra) -->
-  <div class="banner leaderboard" id="ad728">
+  <!-- Banner 728x90 -->
+  <div class="banner leaderboard">
     <script type="text/javascript">
-      function loadAd728() {
-        document.getElementById('ad728').innerHTML = '';
-        var script1 = document.createElement('script');
-        script1.type = 'text/javascript';
-        script1.innerHTML = "atOptions = { 'key':'790e3e25b374c71ea2bede25e64dafd1','format':'iframe','height':90,'width':728,'params':{} };";
-        document.getElementById('ad728').appendChild(script1);
-
-        var script2 = document.createElement('script');
-        script2.type = 'text/javascript';
-        script2.src = "//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js";
-        document.getElementById('ad728').appendChild(script2);
-      }
-      loadAd728();
-      setInterval(loadAd728, 30000);
+      atOptions = {
+        'key' : '790e3e25b374c71ea2bede25e64dafd1',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
     </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
   </div>
 
   <!-- Grid 2 Banner 300x250 -->
   <div class="grid">
-    <div class="banner rectangle" id="ad300a">
+    <div class="banner rectangle">
       <script type="text/javascript">
-        function loadAd300a() {
-          document.getElementById('ad300a').innerHTML = '';
-          var s1 = document.createElement('script');
-          s1.type='text/javascript';
-          s1.innerHTML="atOptions={'key':'276947a635572659f48ea4440c4e25fc','format':'iframe','height':250,'width':300,'params':{}};";
-          document.getElementById('ad300a').appendChild(s1);
-
-          var s2 = document.createElement('script');
-          s2.type='text/javascript';
-          s2.src='//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js';
-          document.getElementById('ad300a').appendChild(s2);
-        }
-        loadAd300a();
-        setInterval(loadAd300a, 30000);
+        atOptions = {
+          'key' : '276947a635572659f48ea4440c4e25fc',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
       </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
-
-    <div class="banner rectangle" id="ad300b">
+    <div class="banner rectangle">
       <script type="text/javascript">
-        function loadAd300b() {
-          document.getElementById('ad300b').innerHTML = '';
-          var s1 = document.createElement('script');
-          s1.type='text/javascript';
-          s1.innerHTML="atOptions={'key':'276947a635572659f48ea4440c4e25fc','format':'iframe','height':250,'width':300,'params':{}};";
-          document.getElementById('ad300b').appendChild(s1);
-
-          var s2 = document.createElement('script');
-          s2.type='text/javascript';
-          s2.src='//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js';
-          document.getElementById('ad300b').appendChild(s2);
-        }
-        loadAd300b();
-        setInterval(loadAd300b, 30000);
+        atOptions = {
+          'key' : '276947a635572659f48ea4440c4e25fc',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
       </script>
+      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
+  </div>
+
+  <!-- Banner 320x50 (Mobile) -->
+  <div class="banner" style="width: 100%; max-width: 320px; height: 50px; margin-top:20px;">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'a443559ffdea6367477176b606afde09',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
   </div>
 
   <!-- Monetag Vignette Ads -->
   <script>
     (function(s){
-      s.dataset.zone='9748151'; // ganti sesuai Zone ID Monetag
+      s.dataset.zone='9748151';
       s.src='https://groleegni.net/vignette.min.js';
     })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
   </script>
