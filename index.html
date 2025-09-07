@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Responsive (Adsterra + Monetag)</title>
+  <title>Ads Plus++ Responsive (Adsterra + Monetag)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -13,13 +13,11 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      text-align: center;
     }
     h1 { color: #38bdf8; margin-bottom: 10px; }
-    #timer {
-      margin: 10px 0;
-      font-size: 14px;
-      color: #fbbf24;
-    }
+    .status { margin: 10px 0; color:#94a3b8; }
+    .status span { color:#facc15; font-weight:bold; }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -36,18 +34,50 @@
   </style>
 </head>
 <body>
-  <h1>Sponsored Ads</h1>
-  <div id="timer">Refresh dalam 30 detik...</div>
+  <h1>Sponsored Ads Plus++</h1>
+
+  <div class="status">
+    ⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp; &nbsp;
+    🔄 Jumlah refresh: <span id="refreshCount">0</span>
+  </div>
+
+  <script>
+    // Multi-country array
+    const countries = ['US','GB','CA','AU','DE','FR','ID','SG','JP','KR'];
+    let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
+    const refreshEl = document.getElementById('refreshCount');
+    const countdownEl = document.getElementById('countdown');
+    let countdown = 30;
+
+    function updateDisplay(){
+      countdownEl.textContent = countdown;
+      refreshEl.textContent = refreshCount;
+    }
+    updateDisplay();
+
+    // Countdown timer + auto refresh
+    setInterval(()=>{
+      countdown--;
+      if(countdown<=0){
+        refreshCount++;
+        localStorage.setItem('adRefreshCount', refreshCount);
+        location.reload();
+        return;
+      }
+      updateDisplay();
+    },1000);
+  </script>
 
   <!-- Banner 728x90 (Adsterra) -->
   <div class="banner leaderboard">
     <script type="text/javascript">
+      const randCountry = countries[Math.floor(Math.random()*countries.length)];
       atOptions = {
-        'key' : '790e3e25b374c71ea2bede25e64dafd1',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
+        key : '790e3e25b374c71ea2bede25e64dafd1',
+        format : 'iframe',
+        height : 90,
+        width : 728,
+        params: { country: randCountry }
       };
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
@@ -57,24 +87,26 @@
   <div class="grid">
     <div class="banner rectangle">
       <script type="text/javascript">
+        const randCountryA = countries[Math.floor(Math.random()*countries.length)];
         atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
+          key : '276947a635572659f48ea4440c4e25fc',
+          format : 'iframe',
+          height : 250,
+          width : 300,
+          params: { country: randCountryA }
         };
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
     </div>
     <div class="banner rectangle">
       <script type="text/javascript">
+        const randCountryB = countries[Math.floor(Math.random()*countries.length)];
         atOptions = {
-          'key' : '276947a635572659f48ea4440c4e25fc',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
+          key : '276947a635572659f48ea4440c4e25fc',
+          format : 'iframe',
+          height : 250,
+          width : 300,
+          params: { country: randCountryB }
         };
       </script>
       <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
@@ -84,12 +116,13 @@
   <!-- Banner 320x50 (Adsterra) -->
   <div class="banner mobile-banner">
     <script type="text/javascript">
+      const randCountryC = countries[Math.floor(Math.random()*countries.length)];
       atOptions = {
-        'key' : 'a443559ffdea6367477176b606afde09',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
+        key : 'a443559ffdea6367477176b606afde09',
+        format : 'iframe',
+        height : 50,
+        width : 320,
+        params: { country: randCountryC }
       };
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
@@ -100,19 +133,19 @@
     <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
   </div>
 
-  <!-- Monetag Vignette Ads -->
-  <script>(function(s){s.dataset.zone='9748151',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement,document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
-  <!-- Countdown + Auto Refresh -->
+  <!-- Monetag Vignette -->
   <script>
-    let countdown = 30;
-    setInterval(() => {
-      countdown--;
-      document.getElementById("timer").innerText = "Refresh dalam " + countdown + " detik...";
-      if (countdown <= 0) {
-        location.reload(); // reload halaman
-      }
-    }, 1000);
+    (function(s){
+      s.dataset.zone='9748151';
+      s.src='https://groleegni.net/vignette.min.js';
+    })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
   </script>
+
+  <script>
+    // Internal log for debug
+    console.log("=== Ads Plus++ Loaded ===");
+    console.log("Countdown: 30s, RefreshCount:", refreshCount);
+  </script>
+
 </body>
 </html>
