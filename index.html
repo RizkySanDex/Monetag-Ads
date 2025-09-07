@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Plus++ Responsive (Adsterra + Monetag)</title>
+  <title>Ads Plus++ Ultra CPM Optimized</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -34,7 +34,7 @@
   </style>
 </head>
 <body>
-  <h1>Sponsored Ads Plus++</h1>
+  <h1>Sponsored Ads Plus++ Ultra CPM</h1>
 
   <div class="status">
     ⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp; &nbsp;
@@ -42,11 +42,10 @@
   </div>
 
   <script>
-    // Multi-country array
     const countries = ['US','GB','CA','AU','DE','FR','ID','SG','JP','KR'];
     let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
-    const refreshEl = document.getElementById('refreshCount');
     const countdownEl = document.getElementById('countdown');
+    const refreshEl = document.getElementById('refreshCount');
     let countdown = 30;
 
     function updateDisplay(){
@@ -55,7 +54,6 @@
     }
     updateDisplay();
 
-    // Countdown timer + auto refresh
     setInterval(()=>{
       countdown--;
       if(countdown<=0){
@@ -68,65 +66,15 @@
     },1000);
   </script>
 
-  <!-- Banner 728x90 (Adsterra) -->
-  <div class="banner leaderboard">
-    <script type="text/javascript">
-      const randCountry = countries[Math.floor(Math.random()*countries.length)];
-      atOptions = {
-        key : '790e3e25b374c71ea2bede25e64dafd1',
-        format : 'iframe',
-        height : 90,
-        width : 728,
-        params: { country: randCountry }
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
-  </div>
+  <!-- Banner container order: Leaderboard, Rectangle A, Rectangle B, Mobile -->
+  <div class="banner leaderboard"></div>
 
-  <!-- Grid 2 Banner 300x250 (Adsterra) -->
   <div class="grid">
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        const randCountryA = countries[Math.floor(Math.random()*countries.length)];
-        atOptions = {
-          key : '276947a635572659f48ea4440c4e25fc',
-          format : 'iframe',
-          height : 250,
-          width : 300,
-          params: { country: randCountryA }
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
-    <div class="banner rectangle">
-      <script type="text/javascript">
-        const randCountryB = countries[Math.floor(Math.random()*countries.length)];
-        atOptions = {
-          key : '276947a635572659f48ea4440c4e25fc',
-          format : 'iframe',
-          height : 250,
-          width : 300,
-          params: { country: randCountryB }
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/276947a635572659f48ea4440c4e25fc/invoke.js"></script>
-    </div>
+    <div class="banner rectangle"></div>
+    <div class="banner rectangle"></div>
   </div>
 
-  <!-- Banner 320x50 (Adsterra) -->
-  <div class="banner mobile-banner">
-    <script type="text/javascript">
-      const randCountryC = countries[Math.floor(Math.random()*countries.length)];
-      atOptions = {
-        key : 'a443559ffdea6367477176b606afde09',
-        format : 'iframe',
-        height : 50,
-        width : 320,
-        params: { country: randCountryC }
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
-  </div>
+  <div class="banner mobile-banner"></div>
 
   <!-- Monetag Banner -->
   <div class="banner rectangle">
@@ -142,10 +90,39 @@
   </script>
 
   <script>
-    // Internal log for debug
-    console.log("=== Ads Plus++ Loaded ===");
+    console.log("=== Ads Plus++ Ultra CPM Loaded ===");
     console.log("Countdown: 30s, RefreshCount:", refreshCount);
-  </script>
 
+    const banners = [
+      {id:'Leaderboard', key:'790e3e25b374c71ea2bede25e64dafd1', w:728,h:90},
+      {id:'RectangleA', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
+      {id:'RectangleB', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
+      {id:'Mobile', key:'a443559ffdea6367477176b606afde09', w:320,h:50}
+    ];
+
+    function loadBanner(bannerEl, bannerObj){
+      const delay = Math.random()*3000; // 0-3 detik
+      const country = countries[Math.floor(Math.random()*countries.length)];
+      setTimeout(()=>{
+        console.log(`Load: ${bannerObj.id} | Country: ${country} | Delay: ${Math.round(delay)}ms | Refresh: ${refreshCount+1}`);
+        atOptions = {
+          key: bannerObj.key,
+          format:'iframe',
+          height: bannerObj.h,
+          width: bannerObj.w,
+          params:{country:country}
+        };
+        const script = document.createElement('script');
+        script.src=`//www.highperformanceformat.com/${bannerObj.key}/invoke.js`;
+        bannerEl.appendChild(script);
+      }, delay);
+    }
+
+    // Load banners
+    banners.forEach((b, idx)=>{
+      const bannerEl = document.querySelectorAll('.banner')[idx];
+      loadBanner(bannerEl,b);
+    });
+  </script>
 </body>
 </html>
