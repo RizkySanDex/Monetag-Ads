@@ -1,128 +1,133 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Ads Plus++ Ultra CPM Optimized</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 { color: #38bdf8; margin-bottom: 10px; }
-    .status { margin: 10px 0; color:#94a3b8; }
-    .status span { color:#facc15; font-weight:bold; }
-    .banner {
-      background: #1e293b;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      margin: 10px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .leaderboard { width: 100%; max-width: 728px; height: 90px; }
-    .rectangle { width: 100%; max-width: 300px; height: 250px; }
-    .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-    .mobile-banner { width: 100%; max-width: 320px; height: 50px; margin-top:20px; }
-  </style>
+<meta charset="UTF-8">
+<title>Ads Plus++ Ultra CPM + Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {font-family: Arial, sans-serif;background:#0f172a;color:#f1f5f9;display:flex;flex-direction:column;align-items:center;padding:20px;text-align:center;}
+h1{color:#38bdf8;margin-bottom:10px;}
+.status{margin:10px 0;color:#94a3b8;}
+.status span{color:#facc15;font-weight:bold;}
+.banner{background:#1e293b;border:1px solid rgba(255,255,255,0.2);border-radius:8px;margin:10px 0;display:flex;justify-content:center;align-items:center;}
+.leaderboard{width:100%;max-width:728px;height:90px;}
+.rectangle{width:100%;max-width:300px;height:250px;}
+.grid{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:20px;}
+.mobile-banner{width:100%;max-width:320px;height:50px;margin-top:20px;}
+#dashboard{width:90%;max-width:800px;margin-top:30px;background:#1e293b;padding:15px;border-radius:8px;overflow:auto;max-height:300px;}
+#dashboard table{width:100%;border-collapse:collapse;}
+#dashboard th, #dashboard td{border:1px solid #94a3b8;padding:5px;text-align:center;font-size:12px;color:#f1f5f9;}
+#dashboard th{background:#0f172a;color:#38bdf8;}
+</style>
 </head>
 <body>
-  <h1>Sponsored Ads Plus++ Ultra CPM</h1>
+<h1>Sponsored Ads Plus++ Ultra CPM Dashboard</h1>
 
-  <div class="status">
-    ⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp; &nbsp;
-    🔄 Jumlah refresh: <span id="refreshCount">0</span>
-  </div>
+<div class="status">
+⏳ Refresh dalam: <span id="countdown">30</span> detik &nbsp;&nbsp;
+🔄 Jumlah refresh: <span id="refreshCount">0</span>
+</div>
 
-  <script>
-    const countries = ['US','GB','CA','AU','DE','FR','ID','SG','JP','KR'];
-    let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
-    const countdownEl = document.getElementById('countdown');
-    const refreshEl = document.getElementById('refreshCount');
-    let countdown = 30;
+<div class="banner leaderboard"></div>
+<div class="grid">
+<div class="banner rectangle"></div>
+<div class="banner rectangle"></div>
+</div>
+<div class="banner mobile-banner"></div>
 
-    function updateDisplay(){
-      countdownEl.textContent = countdown;
-      refreshEl.textContent = refreshCount;
-    }
-    updateDisplay();
+<!-- Monetag Banner -->
+<div class="banner rectangle">
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
+</div>
 
-    setInterval(()=>{
-      countdown--;
-      if(countdown<=0){
-        refreshCount++;
-        localStorage.setItem('adRefreshCount', refreshCount);
-        location.reload();
-        return;
-      }
-      updateDisplay();
-    },1000);
-  </script>
+<!-- Monetag Vignette -->
+<script>
+function loadVignette(){
+  (function(s){
+    s.dataset.zone='9748151';
+    s.src='https://groleegni.net/vignette.min.js';
+  })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+}
+loadVignette();
+</script>
 
-  <!-- Banner container order: Leaderboard, Rectangle A, Rectangle B, Mobile -->
-  <div class="banner leaderboard"></div>
+<!-- Dashboard table -->
+<div id="dashboard">
+<h3>Load History</h3>
+<table id="historyTable">
+  <thead>
+    <tr>
+      <th>Banner</th><th>Country</th><th>Delay(ms)</th><th>Refresh</th><th>Time</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</div>
 
-  <div class="grid">
-    <div class="banner rectangle"></div>
-    <div class="banner rectangle"></div>
-  </div>
+<script>
+const countries = ['US','GB','CA','AU','DE','FR','ID','SG','JP','KR'];
+let refreshCount = parseInt(localStorage.getItem('adRefreshCount')) || 0;
+const countdownEl = document.getElementById('countdown');
+const refreshEl = document.getElementById('refreshCount');
 
-  <div class="banner mobile-banner"></div>
+let countdown = Math.floor(Math.random()*10)+25;
+updateDisplay();
 
-  <!-- Monetag Banner -->
-  <div class="banner rectangle">
-    <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
-  </div>
+function updateDisplay(){ countdownEl.textContent = countdown; refreshEl.textContent = refreshCount; }
 
-  <!-- Monetag Vignette -->
-  <script>
-    (function(s){
-      s.dataset.zone='9748151';
-      s.src='https://groleegni.net/vignette.min.js';
-    })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
-  </script>
+setInterval(()=>{
+  countdown--;
+  if(countdown<=0){
+    refreshCount++;
+    localStorage.setItem('adRefreshCount', refreshCount);
+    location.reload();
+    return;
+  }
+  updateDisplay();
+},1000);
 
-  <script>
-    console.log("=== Ads Plus++ Ultra CPM Loaded ===");
-    console.log("Countdown: 30s, RefreshCount:", refreshCount);
+// Banner definitions
+const banners = [
+  {id:'Leaderboard', key:'790e3e25b374c71ea2bede25e64dafd1', w:728,h:90},
+  {id:'RectangleA', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
+  {id:'RectangleB', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
+  {id:'Mobile', key:'a443559ffdea6367477176b606afde09', w:320,h:50}
+];
 
-    const banners = [
-      {id:'Leaderboard', key:'790e3e25b374c71ea2bede25e64dafd1', w:728,h:90},
-      {id:'RectangleA', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
-      {id:'RectangleB', key:'276947a635572659f48ea4440c4e25fc', w:300,h:250},
-      {id:'Mobile', key:'a443559ffdea6367477176b606afde09', w:320,h:50}
-    ];
+let loadHistory = [];
 
-    function loadBanner(bannerEl, bannerObj){
-      const delay = Math.random()*3000; // 0-3 detik
-      const country = countries[Math.floor(Math.random()*countries.length)];
-      setTimeout(()=>{
-        console.log(`Load: ${bannerObj.id} | Country: ${country} | Delay: ${Math.round(delay)}ms | Refresh: ${refreshCount+1}`);
-        atOptions = {
-          key: bannerObj.key,
-          format:'iframe',
-          height: bannerObj.h,
-          width: bannerObj.w,
-          params:{country:country}
-        };
-        const script = document.createElement('script');
-        script.src=`//www.highperformanceformat.com/${bannerObj.key}/invoke.js`;
-        bannerEl.appendChild(script);
-      }, delay);
-    }
+function updateDashboard(){
+  const tbody = document.querySelector("#historyTable tbody");
+  tbody.innerHTML = "";
+  loadHistory.forEach(item=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${item.banner}</td><td>${item.country}</td><td>${item.delay}</td><td>${item.refresh}</td><td>${item.time}</td>`;
+    tbody.appendChild(tr);
+  });
+}
 
-    // Load banners
-    banners.forEach((b, idx)=>{
-      const bannerEl = document.querySelectorAll('.banner')[idx];
-      loadBanner(bannerEl,b);
-    });
-  </script>
+function loadBanner(bannerEl, bannerObj){
+  const delay = Math.random()*3000;
+  const country = countries[Math.floor(Math.random()*countries.length)];
+  setTimeout(()=>{
+    const timestamp = new Date().toISOString();
+    loadHistory.push({banner:bannerObj.id,country,delay:Math.round(delay),refresh:refreshCount+1,time:timestamp});
+    updateDashboard();
+    console.log(`Load: ${bannerObj.id} | Country: ${country} | Delay: ${Math.round(delay)}ms | Refresh: ${refreshCount+1} | Time: ${timestamp}`);
+    atOptions = { key:bannerObj.key, format:'iframe', height:bannerObj.h, width:bannerObj.w, params:{country}};
+    const script = document.createElement('script');
+    script.src=`//www.highperformanceformat.com/${bannerObj.key}/invoke.js`;
+    bannerEl.appendChild(script);
+  }, delay);
+}
+
+// Load all banners
+banners.forEach((b, idx)=>{
+  const bannerEl = document.querySelectorAll('.banner')[idx];
+  loadBanner(bannerEl,b);
+});
+
+console.log("=== Ads Plus++ Ultra CPM + Dashboard Loaded ===");
+</script>
 </body>
 </html>
