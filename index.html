@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Ads Responsive with Countdown</title>
+  <title>Ads Responsive (Adsterra + Monetag)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -14,8 +14,12 @@
       align-items: center;
       padding: 20px;
     }
-    h1 { color: #38bdf8; margin-bottom: 5px; }
-    .countdown { color: #facc15; margin-bottom: 15px; font-weight: bold; }
+    h1 { color: #38bdf8; margin-bottom: 10px; }
+    #timer {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #fbbf24;
+    }
     .banner {
       background: #1e293b;
       border: 1px solid rgba(255,255,255,0.2);
@@ -28,14 +32,14 @@
     .leaderboard { width: 100%; max-width: 728px; height: 90px; }
     .rectangle { width: 100%; max-width: 300px; height: 250px; }
     .grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
-    iframe { border: none; width: 100%; height: 100%; }
+    .mobile-banner { width: 100%; max-width: 320px; height: 50px; margin-top:20px; }
   </style>
 </head>
 <body>
   <h1>Sponsored Ads</h1>
-  <div class="countdown">Refresh dalam <span id="timer">30</span> detik</div>
+  <div id="timer">Refresh dalam 30 detik...</div>
 
-  <!-- Banner 728x90 -->
+  <!-- Banner 728x90 (Adsterra) -->
   <div class="banner leaderboard">
     <script type="text/javascript">
       atOptions = {
@@ -49,7 +53,7 @@
     <script type="text/javascript" src="//www.highperformanceformat.com/790e3e25b374c71ea2bede25e64dafd1/invoke.js"></script>
   </div>
 
-  <!-- Grid 2 Banner 300x250 -->
+  <!-- Grid 2 Banner 300x250 (Adsterra) -->
   <div class="grid">
     <div class="banner rectangle">
       <script type="text/javascript">
@@ -77,8 +81,8 @@
     </div>
   </div>
 
-  <!-- Banner 320x50 (Mobile) -->
-  <div class="banner" style="width:100%; max-width:320px; height:50px; margin-top:20px;">
+  <!-- Banner 320x50 (Adsterra) -->
+  <div class="banner mobile-banner">
     <script type="text/javascript">
       atOptions = {
         'key' : 'a443559ffdea6367477176b606afde09',
@@ -91,24 +95,23 @@
     <script type="text/javascript" src="//www.highperformanceformat.com/a443559ffdea6367477176b606afde09/invoke.js"></script>
   </div>
 
-  <!-- Monetag Vignette Ads -->
-  <script>
-    (function(s){
-      s.dataset.zone='9748151';
-      s.src='https://groleegni.net/vignette.min.js';
-    })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
-  </script>
+  <!-- Monetag Banner -->
+  <div class="banner rectangle">
+    <script src="https://fpyf8.com/88/tag.min.js" data-zone="169309" async data-cfasync="false"></script>
+  </div>
 
-  <!-- Countdown + Refresh Page -->
+  <!-- Monetag Vignette Ads -->
+  <script>(function(s){s.dataset.zone='9748151',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement,document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+  <!-- Countdown + Auto Refresh -->
   <script>
-    let timer = 30;
-    const timerEl = document.getElementById("timer");
+    let countdown = 30;
     setInterval(() => {
-      timer--;
-      if (timer <= 0) {
-        location.reload(); // reload full page
+      countdown--;
+      document.getElementById("timer").innerText = "Refresh dalam " + countdown + " detik...";
+      if (countdown <= 0) {
+        location.reload(); // reload halaman
       }
-      timerEl.textContent = timer;
     }, 1000);
   </script>
 </body>
